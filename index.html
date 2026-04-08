@@ -6,102 +6,110 @@
 <title>Glome — Safety you can see</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#0c112b; --navy2:#14277c; --blue:#2949f5; --blue2:#18319e; --blue3:#0052d6;
-  --yellow:#fdffc3; --yellow2:#fbdd5c; --orange:#fd6418; --green:#94d389; --green2:#2eaa2c;
-  --cream:#fef5ee; --white:#ffffff;
-  --fn:'DM Sans',system-ui,sans-serif; --fm:'DM Mono',monospace;
+  --navy:#0c112b;
+  --navy2:#14277c;
+  --blue:#2949f5;
+  --blue2:#18319e;
+  --yellow:#fdffc3;
+  --cream:#fef5ee;
+  --white:#fff;
+  --fh:'Plus Jakarta Sans',system-ui,sans-serif;
+  --fn:'DM Sans',system-ui,sans-serif;
+  --fm:'DM Mono',monospace;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--fn);background:var(--navy2);color:var(--white);overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 
-/* ══ NAV ══════════════════════════════════ */
+/* ══ NAV ══════════════════════════════════════
+   Figma: Download (left) | GLOME logo (center) | Sign Up (right)
+═══════════════════════════════════════════════ */
 #nav{
   position:fixed;top:0;left:0;right:0;z-index:300;
-  height:68px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;transition:background .35s,backdrop-filter .35s,border .35s;
-  border-bottom:1px solid transparent;
+  height:72px;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;padding:0 32px;
+  transition:background .35s,backdrop-filter .35s;
 }
-#nav.dark{background:rgba(12,17,43,.9);backdrop-filter:blur(20px);border-color:rgba(255,255,255,.06)}
-.logo svg{display:block;width:108px;height:22px}
-.nav-btns{display:flex;gap:12px}
-.btn-g,.btn-s{
-  height:40px;padding:0 22px;border-radius:100px;border:none;
-  font-family:var(--fn);font-size:15px;font-weight:600;cursor:pointer;
-  transition:transform .18s,background .2s,color .2s;
+#nav.scrolled{
+  background:rgba(12,17,43,.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
-.btn-g:hover,.btn-s:hover{transform:translateY(-1px)}
-.btn-g{background:rgba(255,255,255,.14);color:#fff}
-.btn-g:hover{background:rgba(255,255,255,.24)}
-.btn-s{background:var(--yellow);color:var(--navy2)}
-.btn-s:hover{background:#fff}
+.nav-left{display:flex;align-items:center}
+.nav-right{display:flex;align-items:center;justify-content:flex-end}
+.nav-logo{display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:140px;height:28px;display:block}
+.btn-nav{
+  height:40px;padding:0 22px;border:none;border-radius:100px;
+  font-family:var(--fn);font-size:15px;font-weight:600;
+  background:transparent;color:#fff;cursor:pointer;
+  transition:background .2s,transform .18s;
+}
+.btn-nav:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
 
-/* ══ HERO ══════════════════════════════════
-   Background: #14277c (dark navy)
-   Spotlight: yellow→transparent gradient vector
-   Text: "Safety you can see" in #14277c (on the yellow spotlight)
-════════════════════════════════════════════ */
+/* ══ HERO ═════════════════════════════════════
+   Background: #14277c, centered huge heading
+   Spotlight glow grows on scroll
+═══════════════════════════════════════════════ */
 #hero{
   position:relative;overflow:hidden;
   background:var(--navy2);
-  height:100vh;min-height:680px;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
 }
-/* The full-screen neighborhood map */
 #heroMap{
   position:absolute;inset:0;width:100%;height:100%;
-  opacity:.22;transition:opacity .6s;
+  opacity:.2;transition:opacity .6s;
 }
-/* Yellow spotlight that grows during phases */
 #spotlight{
   position:absolute;
-  width:600px;height:600px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(253,255,195,.55) 0%,rgba(41,73,245,.18) 45%,transparent 70%);
+  width:720px;height:720px;border-radius:50%;
+  background:radial-gradient(circle,rgba(253,255,195,.55) 0%,rgba(41,73,245,.2) 40%,transparent 70%);
   top:50%;left:50%;
-  transform:translate(-50%,-50%) scale(.4);
-  pointer-events:none;z-index:2;
-  filter:blur(40px);
+  transform:translate(-50%,-50%) scale(.3);
+  pointer-events:none;z-index:2;filter:blur(48px);
 }
-/* Inner bright core of spotlight */
 #spotCore{
   position:absolute;
-  width:220px;height:220px;
-  border-radius:50%;
+  width:240px;height:240px;border-radius:50%;
   background:radial-gradient(circle,rgba(253,255,195,.7) 0%,rgba(253,255,195,.1) 60%,transparent 100%);
-  top:50%;left:48%;
-  transform:translate(-50%,-50%) scale(.5);
-  pointer-events:none;z-index:2;
-  filter:blur(20px);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.4);
+  pointer-events:none;z-index:2;filter:blur(22px);
 }
 .hero-inner{
   position:relative;z-index:10;
-  height:100%;display:flex;flex-direction:column;
-  justify-content:flex-end;padding:0 60px 80px;
+  text-align:center;
+  padding:120px 32px 80px;
+  width:100%;
 }
 .hero-eye{
-  font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(255,255,255,.4);margin-bottom:22px;opacity:0;
-  display:flex;align-items:center;gap:12px;
+  font-family:var(--fm);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:28px;opacity:0;
+  display:flex;align-items:center;justify-content:center;gap:14px;
 }
-.hero-eye::before{content:'';width:30px;height:1px;background:rgba(255,255,255,.25)}
+.hero-eye::before,.hero-eye::after{content:'';width:28px;height:1px;background:rgba(255,255,255,.2)}
 h1{
-  font-size:clamp(64px,9vw,152px);
-  font-weight:500;line-height:.93;letter-spacing:-.03em;
-  color:var(--yellow);max-width:1100px;
+  font-family:var(--fh);
+  font-size:clamp(72px,11vw,180px);
+  font-weight:500;line-height:.92;
+  letter-spacing:-.03em;
+  color:var(--yellow);
 }
 h1 .cl{overflow:hidden;display:block}
 h1 .w{display:inline-block;transform:translateY(110%)}
 
-/* Hero floating pins */
+/* floating map pins */
 .fp{position:absolute;z-index:8;opacity:0}
 .fp-ring{
-  width:42px;height:42px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   border:1.5px solid rgba(253,255,195,.3);
   display:flex;align-items:center;justify-content:center;
   position:relative;
@@ -111,81 +119,103 @@ h1 .w{display:inline-block;transform:translateY(110%)}
   border:1px solid rgba(253,255,195,.1);
   animation:pp 2.5s ease-out infinite;
 }
-.fp-dot{width:9px;height:9px;border-radius:50%}
+.fp-dot{width:8px;height:8px;border-radius:50%}
 @keyframes pp{0%{transform:scale(1);opacity:.5}100%{transform:scale(2.4);opacity:0}}
-
 .scroll-hint{
-  position:absolute;bottom:36px;right:60px;z-index:10;
-  font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(255,255,255,.3);opacity:0;
-  display:flex;align-items:center;gap:10px;
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:10;font-family:var(--fm);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.3);
+  display:flex;align-items:center;gap:10px;opacity:0;
+  white-space:nowrap;
 }
-.sh-line{width:38px;height:1px;background:rgba(255,255,255,.2);animation:shl 1.6s ease-in-out infinite alternate}
-@keyframes shl{to{width:60px;opacity:.6}}
+.sh-line{width:36px;height:1px;background:rgba(255,255,255,.2);animation:shl 1.6s ease-in-out infinite alternate}
+@keyframes shl{to{width:56px;opacity:.6}}
 
-/* ══ INTRO ═════════════════════════════════
-   Background: #14277c navy
-   Text: white
-════════════════════════════════════════════ */
-#intro{background:var(--navy2);padding:90px 60px 100px}
-.intro-grid{
-  max-width:1300px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;
+/* ══ INTRO ════════════════════════════════════
+   Background: #14277c, centered text + 2 pill CTAs
+═══════════════════════════════════════════════ */
+#intro{
+  background:var(--navy2);
+  padding:72px 32px 0;
+  text-align:center;
 }
-.intro-p{
-  font-size:clamp(24px,2.5vw,40px);font-weight:500;
-  line-height:1.2;letter-spacing:-.02em;color:#fff;
+.intro-text{
+  font-family:var(--fh);
+  font-size:clamp(22px,2.5vw,38px);font-weight:500;
+  line-height:1.15;letter-spacing:-.02em;
+  color:#fff;max-width:820px;margin:0 auto 56px;
   opacity:0;transform:translateY(28px);
 }
-.intro-btns{display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(28px)}
-.store-btn{
-  display:flex;align-items:center;gap:14px;
-  padding:18px 28px;border-radius:14px;
-  border:2px solid rgba(253,255,195,.4);
-  background:transparent;color:var(--yellow);
-  font-family:var(--fn);font-size:17px;font-weight:700;
-  cursor:pointer;max-width:316px;width:100%;
-  transition:background .2s,border-color .2s,transform .2s;
+.intro-btns{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  opacity:0;transform:translateY(20px);
+  padding-bottom:80px;
 }
-.store-btn:hover{background:rgba(253,255,195,.1);border-color:var(--yellow);transform:translateX(5px)}
+.btn-pill{
+  height:60px;padding:0 52px;border-radius:100px;
+  font-family:var(--fh);font-size:18px;font-weight:700;
+  cursor:pointer;transition:transform .2s,background .2s,color .2s,border-color .2s;
+  display:inline-flex;align-items:center;justify-content:center;
+  letter-spacing:-.02em;min-width:280px;
+}
+.btn-pill:hover{transform:translateY(-2px)}
+.btn-pill-white{background:var(--white);color:var(--blue);border:none}
+.btn-pill-white:hover{background:var(--yellow)}
+.btn-pill-outline{background:transparent;color:var(--white);border:2.5px solid var(--white)}
+.btn-pill-outline:hover{background:rgba(255,255,255,.08)}
 
-/* ══ PRODUCT / BODY ════════════════════════
-   Body section gradient: #fdffc3 → #2949f5 → #14277c
-   Section intro text: blue (#2949f5) on yellow bg
-════════════════════════════════════════════ */
+/* Section tab: navy → yellow (end of intro) */
+.tab-ny{
+  background:var(--navy2);
+  height:62px;position:relative;overflow:hidden;
+}
+.tab-ny::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:62px;
+  background:var(--yellow);
+  border-radius:48px 48px 0 0;
+}
+
+/* ══ BODY / PRODUCT SECTION ═══════════════════
+   Gradient: #fdffc3 → #2949f5 → #14277c
+═══════════════════════════════════════════════ */
 #product{
-  /* Exact gradient from Figma: yellow→blue→navy */
-  background:linear-gradient(180deg,#fdffc3 0%,#2949f5 60%,#14277c 100%);
+  background:linear-gradient(180deg,#fdffc3 0%,#2949f5 59%,#14277c 100%);
 }
 .product-intro{
-  max-width:1300px;margin:0 auto;
-  padding:100px 60px 80px;
+  padding:88px 32px 72px;
+  text-align:center;
   opacity:0;transform:translateY(28px);
 }
 .tag-pill{
-  display:inline-flex;align-items:center;gap:6px;
-  border:1px solid currentColor;border-radius:100px;
-  padding:7px 16px;font-family:var(--fm);font-size:12px;
-  letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;
+  display:inline-flex;align-items:center;
+  border-radius:24px 24px 5px 5px;
+  padding:8px 20px;
+  font-family:var(--fm);font-size:14px;letter-spacing:.05em;
+  margin-bottom:20px;
 }
-.tag-pill.on-yellow{color:var(--blue2)}
-.tag-pill.on-dark{color:rgba(255,255,255,.4)}
-h2{font-size:clamp(42px,5vw,80px);font-weight:500;line-height:1;letter-spacing:-.03em}
+.tag-on-yellow{color:var(--blue2)}
+.tag-on-blue{color:rgba(253,255,195,.7)}
+.tag-on-dark{color:rgba(255,255,255,.4)}
+h2{
+  font-family:var(--fh);
+  font-size:clamp(44px,5.5vw,80px);
+  font-weight:500;line-height:.9;letter-spacing:-.03em;
+}
 .h2-blue{color:var(--blue)}
-.h2-white{color:#fff}
 .h2-yellow{color:var(--yellow)}
+.h2-navy2{color:var(--navy2)}
 
 /* ── Sticky map ── */
 .map-wrap{position:relative}
 .map-sticky{
   position:sticky;top:0;height:100vh;overflow:hidden;
-  display:grid;grid-template-columns:1fr 480px;
+  display:grid;grid-template-columns:1fr 460px;
   background:transparent;
 }
-/* Map canvas — sits on yellow/body gradient */
 .map-canvas{
   position:relative;overflow:hidden;
-  background:#d4e8ce;
+  background:#d8ebd2;
 }
 .map-canvas svg{
   position:absolute;top:50%;left:50%;
@@ -193,41 +223,32 @@ h2{font-size:clamp(42px,5vw,80px);font-weight:500;line-height:1;letter-spacing:-
   width:108%;height:108%;
   transition:transform .8s ease;
 }
-
-/* Map SVG layer management */
 .ml{transition:opacity .5s ease}
 .ml-off{opacity:0;pointer-events:none}
-
-/* animated elements */
 .rpin{opacity:0}
 .aring{opacity:0;transform-origin:center}
-
 #wpath{stroke-dasharray:2000;stroke-dashoffset:2000}
-#wpath.draw{transition:stroke-dashoffset 2.2s cubic-bezier(.4,0,.2,1)}
 #wavatar{opacity:0}
 
-/* Feature panel (right) */
+/* Feature panel */
 .feat-panel{
   position:relative;
-  background:rgba(255,255,255,.96);
+  background:rgba(255,255,255,.97);
   backdrop-filter:blur(12px);
-  border-left:1px solid rgba(12,17,43,.08);
+  border-left:1px solid rgba(12,17,43,.06);
 }
 .feat-slide{
   position:absolute;inset:0;
   display:flex;flex-direction:column;
-  justify-content:center;padding:70px 56px;
+  justify-content:center;padding:64px 52px;
   opacity:0;pointer-events:none;
-  transform:translateY(20px);
-  transition:opacity .5s ease,transform .5s ease;
+  transform:translateY(14px);
+  transition:opacity .45s ease,transform .45s ease;
 }
 .feat-slide.on{opacity:1;pointer-events:auto;transform:translateY(0)}
-
-/* Card border draw animation */
 .card-border{
-  position:absolute;inset:20px;
-  border-radius:16px;pointer-events:none;
-  overflow:visible;
+  position:absolute;inset:20px;border-radius:16px;
+  pointer-events:none;overflow:visible;
 }
 .card-border rect{
   fill:none;stroke-width:2;
@@ -235,181 +256,251 @@ h2{font-size:clamp(42px,5vw,80px);font-weight:500;line-height:1;letter-spacing:-
   transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1);
 }
 .card-border-drawn rect{stroke-dashoffset:0}
-
 .fi-icon{
-  width:58px;height:58px;border-radius:16px;
+  width:64px;height:64px;border-radius:20px;
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:26px;flex-shrink:0;
+  margin-bottom:28px;flex-shrink:0;
 }
-.feat-slide h3{font-size:30px;font-weight:700;letter-spacing:-.02em;color:var(--navy);margin-bottom:14px}
-.feat-slide p{font-size:17px;line-height:1.65;color:rgba(12,17,43,.55);max-width:360px}
-.feat-dots{display:flex;gap:8px;margin-top:34px}
-.fd{width:8px;height:8px;border-radius:50%;background:rgba(12,17,43,.15);transition:background .3s,transform .3s}
-.fd.on{background:var(--navy);transform:scale(1.3)}
-
-/* substep progress bar */
+.feat-slide h3{
+  font-family:var(--fh);font-size:30px;font-weight:700;
+  letter-spacing:-.02em;color:var(--blue2);margin-bottom:14px;
+}
+.feat-slide p{
+  font-size:17px;line-height:1.55;
+  color:rgba(12,17,43,.55);max-width:340px;
+}
 .feat-progress{
   height:3px;background:rgba(12,17,43,.1);border-radius:2px;
-  margin-top:22px;overflow:hidden;max-width:280px;
+  margin-top:28px;overflow:hidden;max-width:260px;
 }
-.feat-progress-fill{
-  height:100%;background:var(--blue);border-radius:2px;
-  width:0%;transition:width .4s ease;
-}
-
-/* scroll spacer — 500vh to fit all sub-triggers */
+.feat-progress-fill{height:100%;background:var(--blue);border-radius:2px;width:0%;transition:width .4s ease}
+.feat-dots{display:flex;gap:8px;margin-top:14px}
+.fd{width:8px;height:8px;border-radius:50%;background:rgba(12,17,43,.15);transition:background .3s,transform .3s}
+.fd.on{background:var(--navy);transform:scale(1.3)}
 .map-spacer{height:500vh}
 
-/* ══ HOW IT WORKS ══════════════════════════
-   On the blue/navy part of body gradient
-   White cards
-════════════════════════════════════════════ */
-#hiw{padding:120px 60px;background:var(--navy2)}
-.hiw-intro{max-width:1300px;margin:0 auto 70px}
+/* ══ HOW IT WORKS ═════════════════════════════
+   Figma: on body gradient (yellow→blue). White cards.
+═══════════════════════════════════════════════ */
+#hiw{
+  padding:192px 42px 0;
+}
+.hiw-intro{
+  max-width:1400px;margin:0 auto 72px;
+  text-align:center;
+}
 .hiw-grid{
-  max-width:1300px;margin:0 auto;
+  max-width:1400px;margin:0 auto;
   display:grid;grid-template-columns:repeat(3,1fr);
-  gap:2px;border-radius:20px;overflow:hidden;
-  background:rgba(255,255,255,.08);
+  gap:24px;
 }
 .hiw-card{
-  background:rgba(255,255,255,.04);padding:50px 44px;
-  display:flex;flex-direction:column;gap:22px;
+  background:#fff;border-radius:48px;
+  padding:48px 44px;
+  display:flex;flex-direction:column;
+  align-items:center;text-align:center;
+  gap:20px;
   opacity:0;transform:translateY(32px);
-  transition:background .25s;
+  transition:box-shadow .25s,transform .25s;
 }
-.hiw-card:hover{background:rgba(255,255,255,.08)}
-.hiw-n{font-family:var(--fm);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.25)}
+.hiw-card:hover{
+  box-shadow:0 20px 60px rgba(41,73,245,.12);
+  transform:translateY(-4px)!important;
+}
+.hiw-n{
+  font-family:var(--fm);font-size:12px;letter-spacing:.14em;
+  color:rgba(12,17,43,.3);text-transform:uppercase;align-self:flex-start;
+}
 .hiw-ic{
-  width:60px;height:60px;border-radius:16px;
+  width:120px;height:120px;
   display:flex;align-items:center;justify-content:center;
+  margin:4px 0;
 }
-.hiw-card h3{font-size:26px;font-weight:700;letter-spacing:-.02em;color:#fff}
-.hiw-card p{font-size:15px;line-height:1.65;color:rgba(255,255,255,.5)}
-.hiw-card:hover h3{color:var(--yellow)}
+.hiw-card h3{
+  font-family:var(--fh);font-size:28px;font-weight:700;
+  letter-spacing:-.02em;color:var(--blue2);
+  align-self:flex-start;
+}
+.hiw-card p{
+  font-size:16px;line-height:1.65;
+  color:rgba(12,17,43,.5);text-align:left;
+}
 
-/* ══ PREMIUM ═══════════════════════════════
-   From Figma: dark gradient bg, yellow text
-   #fdffc3 text on navy/blue dark background
-════════════════════════════════════════════ */
+/* Tab: body gradient → dark navy */
+.tab-bd{
+  height:192px;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#14277c 0%,#2949f5 100%); /* end of body gradient */
+}
+.tab-bd::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:62px;
+  background:var(--navy);
+  border-radius:48px 48px 0 0;
+}
+
+/* ══ PREMIUM ══════════════════════════════════
+   Figma: #0c112b → #14277c → #2949f5 gradient
+   4-column horizontal feature grid
+═══════════════════════════════════════════════ */
 #premium{
-  /* Exact gradient from Figma: navy→blue→yellow */
-  background:linear-gradient(180deg,var(--navy2) 0%,var(--blue) 60%,var(--yellow) 100%);
-  padding:120px 60px;
+  background:linear-gradient(180deg,#0c112b 0%,#14277c 54%,#2949f5 100%);
+  padding:96px 32px 80px;
 }
-.prem-head{max-width:1300px;margin:0 auto 28px;display:flex;align-items:flex-start;gap:18px}
-.prem-sub{font-size:19px;line-height:1.6;color:rgba(255,255,255,.7);max-width:560px;margin:0 auto 56px;display:block;padding:0 60px}
-.prem-body{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;gap:52px;align-items:start}
+.prem-tag-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  margin-bottom:28px;
+}
+.prem-star{width:38px;height:38px}
+.prem-tag-label{
+  font-family:var(--fm);font-size:14px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--yellow);
+}
+.prem-heading{
+  text-align:center;margin-bottom:32px;
+}
+.prem-sub{
+  font-family:var(--fh);
+  text-align:center;font-size:18px;line-height:1.5;
+  color:rgba(255,255,255,.7);
+  max-width:550px;margin:0 auto 72px;
+  opacity:0;transform:translateY(20px);
+}
 .prem-img{
-  border-radius:20px;overflow:hidden;aspect-ratio:4/3;
-  background:linear-gradient(135deg,var(--navy2) 0%,var(--blue2) 50%,var(--blue) 100%);
+  max-width:1104px;height:584px;
+  margin:0 auto 96px;
+  border-radius:48px;overflow:hidden;
+  background:linear-gradient(135deg,#0c112b 0%,#14277c 40%,#2949f5 70%,#18319e 100%);
   display:flex;align-items:center;justify-content:center;
-  opacity:0;
+  opacity:0;position:relative;
 }
-.prem-badge{
-  background:rgba(253,255,195,.12);backdrop-filter:blur(12px);
-  border:1px solid rgba(253,255,195,.25);border-radius:16px;
-  padding:22px 30px;color:var(--yellow);
-  font-size:18px;font-weight:600;
-  display:flex;align-items:center;gap:12px;
+.prem-img-inner{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:22px 36px;
+  color:rgba(255,255,255,.3);
+  font-family:var(--fm);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
 }
-.prem-list-head{
-  font-size:20px;font-weight:700;margin-bottom:22px;
-  color:var(--yellow);
+.prem-features-head{
+  text-align:center;margin-bottom:52px;
+  font-family:var(--fh);font-size:28px;font-weight:700;
+  color:var(--yellow);letter-spacing:-.02em;
+  opacity:0;transform:translateY(16px);
 }
-.prem-list{display:flex;flex-direction:column}
-.prem-item{
-  display:grid;grid-template-columns:52px 1fr;gap:18px;
-  padding:22px 0;border-bottom:1px solid rgba(255,255,255,.1);
-  align-items:start;opacity:0;transform:translateX(-16px);
+.prem-grid{
+  max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:40px 32px;
 }
-.prem-item:first-of-type{border-top:1px solid rgba(255,255,255,.1)}
-.prem-ic{
-  width:52px;height:52px;
-  background:rgba(253,255,195,.12);border-radius:14px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+.prem-col{
+  display:flex;flex-direction:column;
+  align-items:center;text-align:center;
+  gap:28px;
+  opacity:0;transform:translateY(20px);
 }
-.prem-t h4{font-size:17px;font-weight:700;margin-bottom:3px;color:var(--yellow)}
-.prem-t p{font-size:14px;line-height:1.55;color:rgba(255,255,255,.6)}
+.prem-ic-wrap{
+  width:50px;height:50px;
+  display:flex;align-items:center;justify-content:center;
+}
+.prem-col h4{
+  font-family:var(--fh);font-size:20px;font-weight:700;
+  letter-spacing:-.02em;color:var(--white);
+  margin-bottom:6px;
+}
+.prem-col p{
+  font-size:14px;line-height:1.55;color:rgba(255,255,255,.6);
+}
 
-/* ══ FAQ ════════════════════════════════════
-   From Figma: warm cream (#fef5ee)→yellow→blue gradient
-════════════════════════════════════════════ */
-#faq{
-  /* Exact Figma FAQ gradient: cream→yellow→blue */
-  background:linear-gradient(180deg,#fef5ee 0%,#fdffc3 40%,var(--blue) 100%);
-  padding:120px 60px;
+/* Tab: premium blue → FAQ cream */
+.tab-pc{
+  height:62px;background:var(--blue);
+  position:relative;overflow:hidden;
 }
-.faq-inner{max-width:900px;margin:0 auto}
-.faq-head{margin-bottom:56px}
+.tab-pc::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:62px;
+  background:var(--cream);
+  border-radius:48px 48px 0 0;
+}
+
+/* ══ FAQ ══════════════════════════════════════
+   Figma: #fef5ee → #fdffc3 → #2949f5 gradient
+═══════════════════════════════════════════════ */
+#faq{
+  background:linear-gradient(180deg,#fef5ee 0%,#fdffc3 40%,#2949f5 100%);
+  padding:80px 32px 0;
+}
+.faq-inner{max-width:1100px;margin:0 auto}
+.faq-head{text-align:center;margin-bottom:64px}
 .faq-head h2{color:var(--blue);letter-spacing:-.03em}
-.faq-head p{font-size:19px;line-height:1.6;color:rgba(12,17,43,.55);margin-top:18px;max-width:580px}
-.faq-item{border-bottom:1px solid rgba(12,17,43,.12)}
-.faq-item:first-of-type{border-top:1px solid rgba(12,17,43,.12)}
+.faq-item{border-bottom:2px solid rgba(41,73,245,.15)}
+.faq-item:first-of-type{border-top:2px solid rgba(41,73,245,.15)}
 .faq-q{
   display:flex;align-items:center;justify-content:space-between;
-  padding:26px 0;cursor:pointer;
-  font-size:20px;font-weight:700;letter-spacing:-.01em;
-  color:var(--blue2);gap:16px;user-select:none;transition:color .2s;
+  padding:28px 24px;cursor:pointer;
+  font-family:var(--fh);
+  font-size:clamp(18px,1.8vw,28px);font-weight:700;
+  letter-spacing:-.01em;color:var(--blue2);
+  gap:16px;user-select:none;transition:color .2s;
 }
 .faq-q:hover{color:var(--blue)}
 .faq-ico{
-  width:30px;height:30px;border-radius:50%;
-  border:1.5px solid rgba(12,17,43,.2);
+  width:28px;height:28px;border-radius:50%;
+  border:1.5px solid rgba(24,49,158,.3);
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;transition:transform .3s,background .3s,border-color .3s;
 }
 .faq-item.open .faq-ico{transform:rotate(45deg);background:var(--blue);border-color:var(--blue)}
 .faq-item.open .faq-ico svg line{stroke:#fff}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.faq-item.open .faq-a{max-height:240px}
-.faq-a p{padding-bottom:26px;font-size:16px;line-height:1.7;color:rgba(12,17,43,.55)}
+.faq-item.open .faq-a{max-height:220px}
+.faq-a p{padding:0 24px 28px;font-size:17px;line-height:1.7;color:rgba(12,17,43,.6)}
 
-/* ══ FOOTER CTA ════════════════════════════
-   From Figma: "Welcome to the neighborhood" #18319e on gradient
-════════════════════════════════════════════ */
-#fcta{
-  background:linear-gradient(180deg,var(--blue) 0%,var(--blue2) 100%);
-  padding:120px 60px;text-align:center;
+/* Welcome CTA */
+.faq-cta{
+  padding:120px 32px 96px;text-align:center;
 }
-#fcta h2{
-  font-size:clamp(48px,6.5vw,88px);letter-spacing:-.03em;line-height:.96;
-  margin-bottom:52px;color:var(--yellow);
-  opacity:0;transform:translateY(40px);
+.faq-cta h2{
+  font-family:var(--fh);
+  font-size:clamp(44px,6vw,80px);line-height:.93;
+  letter-spacing:-.03em;color:var(--blue2);
+  margin-bottom:48px;
+  opacity:0;transform:translateY(28px);
 }
-.fcta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
-.btn-big{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:18px 36px;border-radius:100px;
-  font-family:var(--fn);font-size:17px;font-weight:700;
-  cursor:pointer;border:none;transition:transform .2s,background .2s;
+.faq-cta-btns{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  opacity:0;transform:translateY(16px);
 }
-.btn-big:hover{transform:translateY(-2px)}
-.btn-big-y{background:var(--yellow);color:var(--navy2)}
-.btn-big-y:hover{background:#fff}
-.btn-big-o{background:transparent;color:var(--yellow);border:2px solid rgba(253,255,195,.4)}
-.btn-big-o:hover{background:rgba(253,255,195,.1)}
+.btn-pill-blue{background:var(--blue);color:#fff;border:none}
+.btn-pill-blue:hover{background:var(--blue2)}
+.btn-pill-blue-outline{background:transparent;color:var(--blue);border:2.5px solid var(--blue)}
+.btn-pill-blue-outline:hover{background:rgba(41,73,245,.08)}
 
-/* ══ FOOTER ═════════════════════════════════
-   Dark navy, yellow text/logo, blue wave graphics
-════════════════════════════════════════════ */
-footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidden}
-.foot-wave{display:block;width:100%;height:auto;opacity:.35;margin-bottom:-4px}
+/* City illustration (bottom of FAQ) */
+.city-art{
+  width:100%;aspect-ratio:1.73;
+  position:relative;overflow:hidden;
+}
+.city-art svg{width:100%;height:100%}
+
+/* ══ FOOTER ═══════════════════════════════════ */
+footer{
+  background:var(--navy);
+  padding:0 32px 36px;
+}
 .foot-inner{
-  max-width:1300px;margin:0 auto;padding:28px 60px 0;
   display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:16px;position:relative;z-index:2;
+  padding:28px 0;flex-wrap:wrap;gap:16px;
 }
-.foot-nav{display:flex;gap:24px;font-size:14px}
-.foot-nav a{color:var(--yellow);transition:opacity .2s}
-.foot-nav a:hover{opacity:.7}
-.foot-logo svg{width:100px;height:22px}
-.foot-social{display:flex;gap:14px;font-family:var(--fm);font-size:12px;letter-spacing:.1em}
+.foot-nav{display:flex;gap:28px;font-size:15px}
+.foot-nav a{color:var(--yellow);transition:opacity .2s;letter-spacing:-.01em}
+.foot-nav a:hover{opacity:.65}
+.foot-logo svg{width:150px;height:30px;display:block}
+.foot-social{display:flex;gap:18px;font-family:var(--fm);font-size:13px;letter-spacing:.08em}
 .foot-social a{color:var(--yellow);transition:opacity .2s}
-.foot-social a:hover{opacity:.7}
+.foot-social a:hover{opacity:.65}
 
-/* ══ SHARED UTILS ══════════════════════════ */
-.reveal{opacity:0;transform:translateY(26px)}
+/* Shared */
+.reveal{opacity:0;transform:translateY(24px)}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--navy2)}
 ::-webkit-scrollbar-thumb{background:rgba(253,255,195,.2);border-radius:3px}
@@ -417,32 +508,36 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
 </head>
 <body>
 
-<!-- ═══════════ NAV ═══════════════════════ -->
+<!-- ═══════════ NAV ═══════════════════════════
+  3-column: Download | GLOME logo | Sign Up
+════════════════════════════════════════════ -->
 <nav id="nav">
-  <a href="#" class="logo" aria-label="Glome">
-    <svg viewBox="0 0 108 22" fill="none">
-      <path d="M0 11C0 4.93 4.93 0 11 0c3.86 0 7.3 1.77 9.6 4.56l-3.4 3.4C15.7 6.4 13.46 5.28 11 5.28 7.27 5.28 4.28 8.27 4.28 11s2.99 5.72 6.72 5.72 6.72-2.57 6.72-5.72H12.5V7.44H24.4c.17.73.26 1.5.26 2.28-.4 6.07-5.37 11-12 11S0 17.07 0 11z" fill="#FDFFC3"/>
-      <path d="M28 0h4.8v17.6H43V22H28V0z" fill="#FDFFC3"/>
-      <path d="M59 0C52.37 0 47 4.93 47 11s5.37 11 12 11 12-4.93 12-11S65.63 0 59 0zm0 5.28c3.73 0 6.72 2.99 6.72 5.72s-2.99 5.72-6.72 5.72-6.72-2.57-6.72-5.72S55.27 5.28 59 5.28z" fill="#FDFFC3"/>
-      <path d="M75 0h5.4l6 10.56L92.4 0h5.4v22H93V9.8L86.4 21.2 79.8 9.8V22H75V0z" fill="#FDFFC3"/>
-      <path d="M103 0h18v5.28H108.28v5.04H120v5.28H108.28V16.72H121V22H103V0z" fill="#FDFFC3" transform="translate(-5)"/>
-    </svg>
-  </a>
-  <div class="nav-btns">
-    <button class="btn-g">Download</button>
-    <button class="btn-s">Sign Up</button>
+  <div class="nav-left">
+    <button class="btn-nav">Download</button>
+  </div>
+  <div class="nav-logo">
+    <a href="#" aria-label="Glome">
+      <svg viewBox="0 0 152 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 15C0 6.716 6.716 0 15 0c5.268 0 9.955 2.41 13.082 6.218l-4.636 4.636C21.591 8.726 18.45 7.2 15 7.2c-4.309 0-7.8 3.491-7.8 7.8s3.491 7.8 7.8 7.8 7.8-3.502 7.8-7.8H17.04V10.14H33.27c.227.995.354 2.045.354 3.107C33.078 21.81 24.847 30 15 30S0 23.284 0 15z" fill="#FDFFC3"/>
+        <path d="M38.2 0h6.545v24H58V30H38.2V0z" fill="#FDFFC3"/>
+        <path d="M80.5 0C71.716 0 64 6.716 64 15s7.716 15 16.5 15 16.5-6.716 16.5-15S89.284 0 80.5 0zm0 7.2c5.082 0 9.154 3.491 9.154 7.8s-4.072 7.8-9.154 7.8-9.154-3.502-9.154-7.8S75.418 7.2 80.5 7.2z" fill="#FDFFC3"/>
+        <path d="M102 0h7.364l8.182 14.4L125.727 0h7.364v30H126V13.364L116.545 28.8 107.09 13.364V30H102V0z" fill="#FDFFC3"/>
+        <path d="M140 0h24v7.2h-16.91v6.872H163v7.2h-15.91v6.527H164V30h-24V0z" fill="#FDFFC3"/>
+      </svg>
+    </a>
+  </div>
+  <div class="nav-right">
+    <button class="btn-nav">Sign Up</button>
   </div>
 </nav>
 
-<!-- ═══════════ HERO ══════════════════════
-  Background: #14277c dark navy
-  Spotlight: yellow gradient glow (grows on scroll through 6 phases)
-  Text: yellow (#fdffc3) "Safety you can see"
-═══════════════════════════════════════════ -->
+<!-- ═══════════ HERO ═══════════════════════════
+  Background: #14277c
+  Centered "Safety you can see" — 6 scroll phases
+════════════════════════════════════════════ -->
 <section id="hero">
-  <!-- Neighbourhood map grid background -->
+  <!-- Neighbourhood map grid bg -->
   <svg id="heroMap" viewBox="0 0 1728 916" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <rect width="1728" height="916" fill="#0c1835"/>
     <defs>
       <radialGradient id="mg" cx="50%" cy="50%" r="65%">
         <stop offset="0%" stop-color="#1e2d5a"/>
@@ -461,7 +556,6 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
     <rect x="940" y="0" width="10" height="916" fill="#1e2d5a"/>
     <rect x="1190" y="0" width="10" height="916" fill="#1e2d5a"/>
     <rect x="1440" y="0" width="10" height="916" fill="#1e2d5a"/>
-    <!-- Diagonal -->
     <line x1="0" y1="0" x2="310" y2="215" stroke="#1e2d5a" stroke-width="10"/>
     <!-- Park -->
     <ellipse cx="1520" cy="180" rx="200" ry="140" fill="#142030"/>
@@ -496,9 +590,9 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
       <rect rx="4" x="1200" y="655" width="232" height="130"/>
       <rect rx="4" x="1450" y="655" width="268" height="130"/>
     </g>
-    <!-- House dots -->
+    <!-- House dots light up on scroll -->
     <g id="hdots">
-      <g opacity=".0" id="hrow1">
+      <g opacity="0" id="hrow1">
         <circle cx="80" cy="110" r="4" fill="#2949f5"/>
         <circle cx="110" cy="110" r="4" fill="#2949f5"/>
         <circle cx="290" cy="95" r="4" fill="#2949f5"/>
@@ -548,20 +642,19 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
     </g>
   </svg>
 
-  <!-- Yellow spotlight glow -->
   <div id="spotlight"></div>
   <div id="spotCore"></div>
 
   <!-- Floating context pins -->
-  <div class="fp" style="left:20%;top:34%"><div class="fp-ring"><div class="fp-dot" style="background:#94d389"></div></div></div>
-  <div class="fp" style="left:44%;top:24%"><div class="fp-ring" style="border-color:rgba(41,73,245,.5)"><div class="fp-dot" style="background:#2949f5"></div></div></div>
-  <div class="fp" style="left:68%;top:40%"><div class="fp-ring" style="border-color:rgba(253,100,24,.5)"><div class="fp-dot" style="background:#fd6418"></div></div></div>
-  <div class="fp" style="left:82%;top:20%"><div class="fp-ring" style="border-color:rgba(148,211,137,.5)"><div class="fp-dot" style="background:#94d389"></div></div></div>
-  <div class="fp" style="left:9%;top:60%"><div class="fp-ring" style="border-color:rgba(251,221,92,.5)"><div class="fp-dot" style="background:#fbdd5c"></div></div></div>
-  <div class="fp" style="left:91%;top:52%"><div class="fp-ring"><div class="fp-dot" style="background:#fdffc3"></div></div></div>
+  <div class="fp" style="left:18%;top:28%"><div class="fp-ring"><div class="fp-dot" style="background:#94d389"></div></div></div>
+  <div class="fp" style="left:38%;top:20%"><div class="fp-ring" style="border-color:rgba(41,73,245,.5)"><div class="fp-dot" style="background:#2949f5"></div></div></div>
+  <div class="fp" style="left:62%;top:36%"><div class="fp-ring" style="border-color:rgba(253,100,24,.5)"><div class="fp-dot" style="background:#fd6418"></div></div></div>
+  <div class="fp" style="left:80%;top:18%"><div class="fp-ring" style="border-color:rgba(148,211,137,.5)"><div class="fp-dot" style="background:#94d389"></div></div></div>
+  <div class="fp" style="left:8%;top:58%"><div class="fp-ring" style="border-color:rgba(251,221,92,.5)"><div class="fp-dot" style="background:#fbdd5c"></div></div></div>
+  <div class="fp" style="left:90%;top:50%"><div class="fp-ring"><div class="fp-dot" style="background:#fdffc3"></div></div></div>
 
   <div class="hero-inner">
-    <div class="hero-eye">Neighbourhood safety · reimagined</div>
+    <div class="hero-eye">Neighbourhood safety &middot; reimagined</div>
     <h1>
       <span class="cl"><span class="w">Safety</span> <span class="w">you</span></span>
       <span class="cl"><span class="w">can</span> <span class="w">see</span></span>
@@ -570,35 +663,27 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
   <div class="scroll-hint">Scroll<div class="sh-line"></div></div>
 </section>
 
-<!-- ═══════════ INTRO ════════════════════
-  Background: #14277c navy
-  Text: white. Buttons: yellow borders
-═══════════════════════════════════════════ -->
+<!-- ═══════════ INTRO ══════════════════════════
+  Centered text + 2 horizontal pill CTAs
+════════════════════════════════════════════ -->
 <section id="intro">
-  <div class="intro-grid">
-    <p class="intro-p">A neighborhood network that makes safety visible, reliable, and close to home.</p>
-    <div class="intro-btns">
-      <button class="store-btn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.3.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="currentColor"/></svg>
-        Download for iOS
-      </button>
-      <button class="store-btn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3.18 23.76c.29.16.62.19.94.09l11.84-6.76-2.48-2.48-10.3 9.15zM.49 2.03C.18 2.4 0 2.96 0 3.68v16.64c0 .72.18 1.28.49 1.65l.09.08 9.32-9.32v-.22L.58 3.19l-.09.08zM20.69 10.4l-2.67-1.52-2.77 2.77 2.77 2.77 2.68-1.52c.76-.43.76-1.13 0-1.56l-.01.06zM3.18.24l10.3 9.14 2.48-2.48L4.12.14C3.8.04 3.47.08 3.18.24z" fill="currentColor"/></svg>
-        Download for Android
-      </button>
-    </div>
+  <p class="intro-text">A neighborhood network that makes safety visible, reliable, and close to home.</p>
+  <div class="intro-btns">
+    <button class="btn-pill btn-pill-white">Download for iOS</button>
+    <button class="btn-pill btn-pill-outline">Download for Android</button>
   </div>
+  <!-- Tab curve: navy → yellow -->
+  <div class="tab-ny"></div>
 </section>
 
-<!-- ═══════════ PRODUCT / MAP ═════════════
-  Body gradient: yellow→blue→navy
-  Product intro on yellow section
-  Sticky map scroll through 3 feature zones
-═══════════════════════════════════════════ -->
+<!-- ═══════════ PRODUCT / MAP SECTION ═════════
+  Gradient body: #fdffc3 → #2949f5 → #14277c
+  Sticky scroll map + 3 feature panels
+════════════════════════════════════════════ -->
 <section id="product">
   <div class="product-intro" id="prodIntro">
-    <div class="tag-pill on-yellow">Introducing Glome</div>
-    <h2 class="h2-blue">What safety<br>looks like</h2>
+    <div class="tag-pill tag-on-yellow">Introducing Glome</div>
+    <h2 class="h2-blue">What safety looks like</h2>
   </div>
 
   <div class="map-wrap">
@@ -607,24 +692,18 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
       <!-- Left: Map SVG -->
       <div class="map-canvas">
         <svg id="mapSvg" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg">
-          <!-- Base -->
           <rect width="900" height="700" fill="#d8ebd2"/>
-          <!-- Park -->
           <ellipse cx="720" cy="150" rx="155" ry="118" fill="#b4d2ab"/>
           <ellipse cx="738" cy="140" rx="56" ry="43" fill="#9ec8e8" opacity=".7"/>
-
-          <!-- Roads horizontal -->
+          <!-- Roads -->
           <rect x="0" y="222" width="900" height="13" fill="#becab5"/>
           <rect x="0" y="398" width="900" height="13" fill="#becab5"/>
           <rect x="0" y="574" width="900" height="13" fill="#becab5"/>
-          <!-- Roads vertical -->
           <rect x="138" y="0" width="13" height="700" fill="#becab5"/>
           <rect x="328" y="0" width="13" height="700" fill="#becab5"/>
           <rect x="518" y="0" width="13" height="700" fill="#becab5"/>
           <rect x="708" y="0" width="13" height="700" fill="#becab5"/>
-          <!-- Diagonal -->
           <line x1="0" y1="0" x2="290" y2="222" stroke="#becab5" stroke-width="13"/>
-
           <!-- Buildings -->
           <g fill="#c2ccba" opacity=".8">
             <rect rx="5" x="15" y="15" width="115" height="200"/>
@@ -647,8 +726,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             <rect rx="5" x="535" y="594" width="166" height="92"/>
             <rect rx="5" x="728" y="594" width="157" height="92"/>
           </g>
-
-          <!-- Resident dots (always visible) -->
+          <!-- Resident dots -->
           <g fill="#2949f5" opacity=".85" id="rDots">
             <circle cx="72" cy="108" r="4.5"/><circle cx="98" cy="108" r="4.5"/>
             <circle cx="238" cy="100" r="4.5"/><circle cx="264" cy="100" r="4.5"/>
@@ -671,16 +749,13 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             <circle cx="808" cy="638" r="4.5"/>
           </g>
 
-          <!-- ─ ALERTS LAYER ─ -->
+          <!-- ALERTS LAYER -->
           <g id="lAlert" class="ml ml-off">
-            <!-- Center home highlight -->
             <circle class="aring" id="ar0" cx="264" cy="310" r="18" fill="#2949f5" opacity=".9"/>
             <text x="264" y="316" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="14" font-weight="700" fill="white">!</text>
-            <!-- Expanding rings -->
             <circle class="aring" id="ar1" cx="264" cy="310" r="30" fill="none" stroke="#2949f5" stroke-width="2.5" opacity=".8"/>
             <circle class="aring" id="ar2" cx="264" cy="310" r="52" fill="none" stroke="#2949f5" stroke-width="2" opacity=".5"/>
             <circle class="aring" id="ar3" cx="264" cy="310" r="82" fill="none" stroke="#2949f5" stroke-width="1.5" opacity=".28"/>
-            <!-- Notified neighbours (fade in after rings) -->
             <g class="rpin" id="rpa1">
               <circle cx="428" cy="310" r="14" fill="#2949f5" opacity=".75"/>
               <text x="428" y="316" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="white">!</text>
@@ -699,7 +774,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             </g>
           </g>
 
-          <!-- ─ WALK LAYER ─ -->
+          <!-- WALK LAYER -->
           <g id="lWalk" class="ml ml-off">
             <path id="wpath" d="M808 638 L808 574 L708 574 L708 398 L518 398 L518 222 L328 222 L328 108 L238 108"
               fill="none" stroke="#2eaa2c" stroke-width="4.5"
@@ -709,10 +784,8 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
               <circle r="5.5" fill="white" transform="translate(0,-5)"/>
               <path d="M-6 10 Q0 4 6 10" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
             </g>
-            <!-- Destination -->
             <circle cx="238" cy="108" r="17" fill="#2eaa2c" opacity=".9"/>
             <text x="238" y="114" text-anchor="middle" font-size="14">🏠</text>
-            <!-- Walk checkpoints (appear as avatar passes) -->
             <g class="rpin" id="rwp1">
               <circle cx="518" cy="398" r="10" fill="rgba(46,170,44,.6)"/>
               <text x="518" y="403" text-anchor="middle" font-size="10">✓</text>
@@ -723,7 +796,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             </g>
           </g>
 
-          <!-- ─ REPORTS LAYER ─ -->
+          <!-- REPORTS LAYER -->
           <g id="lReport" class="ml ml-off">
             <g class="rpin" id="rrp1">
               <path d="M333 398L333 366Q333 354 345 354Q357 354 357 366L357 398Z" fill="#fd6418"/>
@@ -761,7 +834,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
         </svg>
       </div>
 
-      <!-- Right: Feature panels with card-border animation -->
+      <!-- Right: Feature panels -->
       <div class="feat-panel" id="featPanel">
 
         <!-- Panel 1: Neighbour alerts -->
@@ -770,7 +843,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             <rect x="1" y="1" width="438" height="518" rx="15" stroke="#2949f5"/>
           </svg>
           <div class="fi-icon" style="background:#2949f5">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="white"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" fill="white"/></svg>
           </div>
           <h3>Neighbour alerts</h3>
           <p>See what's happening around you, in real time, from people on your street. Neighbour-to-neighbour alerts keep everyone informed.</p>
@@ -786,7 +859,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             <rect x="1" y="1" width="438" height="518" rx="15" stroke="#2eaa2c"/>
           </svg>
           <div class="fi-icon" style="background:#2eaa2c">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z" fill="white"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z" fill="white"/></svg>
           </div>
           <h3>Walk with me</h3>
           <p>A companion for your route home. Share your route with people you trust so someone always knows where you are, from start to doorstep.</p>
@@ -802,7 +875,7 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
             <rect x="1" y="1" width="438" height="518" rx="15" stroke="#fd6418"/>
           </svg>
           <div class="fi-icon" style="background:#fd6418">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="white"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="white"/></svg>
           </div>
           <h3>Council reports</h3>
           <p>Report broken lights, hazards, and local issues in seconds. Small fixes, handled faster.</p>
@@ -812,161 +885,281 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
           </div>
         </div>
 
-      </div><!-- /feat-panel -->
-    </div><!-- /map-sticky -->
+      </div>
+    </div>
     <div class="map-spacer"></div>
   </div>
 </section>
 
-<!-- ═══════════ HOW IT WORKS ══════════════
-  Background: dark navy
-  White cards, blue icons
-═══════════════════════════════════════════ -->
+<!-- ═══════════ HOW IT WORKS ══════════════════
+  Still on the body gradient (yellow→blue)
+  3 white 450px cards side-by-side
+════════════════════════════════════════════ -->
 <section id="hiw">
   <div class="hiw-intro">
-    <div class="tag-pill on-dark reveal">How it works</div>
-    <h2 class="h2-white reveal">The visible<br>human network</h2>
+    <div class="tag-pill tag-on-yellow reveal">How it works</div>
+    <h2 class="h2-blue reveal">The visible human network</h2>
   </div>
   <div class="hiw-grid">
+
     <div class="hiw-card reveal">
       <div class="hiw-n">01</div>
-      <div class="hiw-ic" style="background:rgba(41,73,245,.18)">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" fill="#2949f5"/></svg>
+      <div class="hiw-ic">
+        <!-- Home/house icon -->
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="40" fill="rgba(41,73,245,.08)"/>
+          <path d="M40 18L16 34v28h18V46h12v16h18V34L40 18z" fill="none" stroke="#2949f5" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M34 62V46h12v16" fill="none" stroke="#2949f5" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="40" cy="36" r="4" fill="#2949f5"/>
+        </svg>
       </div>
       <h3>Claim your home</h3>
       <p>Choose your address and we'll send a confirmation card to your home.</p>
     </div>
+
     <div class="hiw-card reveal">
       <div class="hiw-n">02</div>
-      <div class="hiw-ic" style="background:rgba(46,170,44,.18)">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" fill="#2eaa2c"/></svg>
+      <div class="hiw-ic">
+        <!-- Verification / envelope icon -->
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="40" fill="rgba(46,170,44,.08)"/>
+          <rect x="18" y="26" width="44" height="30" rx="4" fill="none" stroke="#2eaa2c" stroke-width="2.5"/>
+          <path d="M18 30l22 16 22-16" fill="none" stroke="#2eaa2c" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M28 48l6 6 14-14" fill="none" stroke="#2eaa2c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
       <h3>Verify your home</h3>
       <p>Enter the code from your card to confirm your address.</p>
     </div>
+
     <div class="hiw-card reveal">
       <div class="hiw-n">03</div>
-      <div class="hiw-ic" style="background:rgba(253,255,195,.18)">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#f4ae20"/></svg>
+      <div class="hiw-ic">
+        <!-- Street lamp / light icon -->
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="40" fill="rgba(253,255,195,.15)"/>
+          <line x1="40" y1="56" x2="40" y2="64" stroke="#f4ae20" stroke-width="3" stroke-linecap="round"/>
+          <path d="M28 24h24v16a12 12 0 01-24 0V24z" fill="none" stroke="#f4ae20" stroke-width="2.5"/>
+          <path d="M30 20c0-2.2 4.5-4 10-4s10 1.8 10 4" fill="none" stroke="#f4ae20" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="40" cy="32" r="6" fill="#f4ae20" opacity=".4"/>
+          <circle cx="40" cy="32" r="3" fill="#f4ae20"/>
+        </svg>
       </div>
       <h3>Light up your street</h3>
       <p>Once verified, your home lights up and your network of neighbours appears.</p>
     </div>
+
   </div>
+  <!-- Tab curve: gradient → dark navy -->
+  <div class="tab-bd"></div>
 </section>
 
-<!-- ═══════════ PREMIUM ═══════════════════
-  From Figma: gradient navy→blue→yellow background
-  Yellow text (#fdffc3), yellow icons
-═══════════════════════════════════════════ -->
+<!-- ═══════════ PREMIUM ════════════════════════
+  Background: #0c112b → #14277c → #2949f5
+  Horizontal 4-column feature grid
+════════════════════════════════════════════ -->
 <section id="premium">
-  <div class="prem-head">
-    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" style="flex-shrink:0;margin-top:6px">
-      <path d="M21 4L26 15.5L38 17.5L29.5 26L31.5 38L21 32.5L10.5 38L12.5 26L4 17.5L16 15.5L21 4Z" fill="#fdffc3" stroke="#fdffc3" stroke-width="2" stroke-linejoin="round"/>
+  <div class="prem-tag-wrap reveal">
+    <svg class="prem-star" viewBox="0 0 38 38" fill="none">
+      <path d="M19 3l4.5 10.5L35 15.5l-8 7.5 2 11.5L19 29l-10 5.5 2-11.5L3 15.5l11.5-2L19 3z" fill="#fdffc3" stroke="#fdffc3" stroke-width="2" stroke-linejoin="round"/>
     </svg>
-    <div>
-      <div class="tag-pill on-dark reveal">Premium</div>
-      <h2 class="h2-yellow reveal">Visible day<br>and night</h2>
-    </div>
+    <span class="prem-tag-label">Premium</span>
   </div>
-  <span class="prem-sub reveal">
-    When you want added reassurance, Glome provides a consistent, professional patrol presence in your neighborhood, led by a named local officer who knows the area.
-  </span>
-  <div class="prem-body">
-    <div class="prem-img reveal">
-      <div class="prem-badge">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l6 2.67V11c0 3.88-2.64 7.5-6 8.58C8.64 18.5 6 14.88 6 11V7.67L12 5z" fill="currentColor"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
-        Named local officer
+  <div class="prem-heading reveal">
+    <h2 class="h2-yellow">Visible day and night</h2>
+  </div>
+  <p class="prem-sub reveal">
+    When you want added reassurance, Glome provides a consistent, professional patrol presence in your neighborhood, led by a named local officer who knows the area and the streets they serve.
+  </p>
+
+  <div class="prem-img reveal">
+    <div class="prem-img-inner">Officer patrol imagery — coming soon</div>
+  </div>
+
+  <p class="prem-features-head reveal">What's included</p>
+
+  <div class="prem-grid">
+    <div class="prem-col reveal">
+      <div class="prem-ic-wrap">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+          <path d="M25 6C14.5 6 6 14.5 6 25v12l4 4h30l4-4V25C44 14.5 35.5 6 25 6z" fill="none" stroke="#fdffc3" stroke-width="2.5"/>
+          <circle cx="25" cy="22" r="6" fill="none" stroke="#fdffc3" stroke-width="2.5"/>
+          <path d="M13 44c0-6.6 5.4-12 12-12s12 5.4 12 12" fill="none" stroke="#fdffc3" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Named officer</h4>
+        <p>Your street is supported by a dedicated officer who knows the area</p>
       </div>
     </div>
-    <div>
-      <p class="prem-list-head">What's included</p>
-      <div class="prem-list">
-        <div class="prem-item">
-          <div class="prem-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#fdffc3"/></svg></div>
-          <div class="prem-t"><h4>Named officer</h4><p>Your street is supported by a dedicated officer who knows the area.</p></div>
-        </div>
-        <div class="prem-item">
-          <div class="prem-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#fdffc3"/></svg></div>
-          <div class="prem-t"><h4>Patrol response</h4><p>Request a patrol pass or set a scheduled route through the app.</p></div>
-        </div>
-        <div class="prem-item">
-          <div class="prem-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.25.2 2.45.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#fdffc3"/></svg></div>
-          <div class="prem-t"><h4>SOS escalation</h4><p>Your officer is first in the alert chain, notified before anyone else.</p></div>
-        </div>
-        <div class="prem-item">
-          <div class="prem-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#fdffc3"/></svg></div>
-          <div class="prem-t"><h4>Key holding</h4><p>Keys are securely held so officers can respond quickly when needed.</p></div>
-        </div>
+    <div class="prem-col reveal">
+      <div class="prem-ic-wrap">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+          <circle cx="25" cy="25" r="18" fill="none" stroke="#fdffc3" stroke-width="2.5"/>
+          <path d="M25 10v15l9 5" fill="none" stroke="#fdffc3" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Patrol response</h4>
+        <p>Request a patrol pass or set a scheduled route through the app.</p>
+      </div>
+    </div>
+    <div class="prem-col reveal">
+      <div class="prem-ic-wrap">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+          <circle cx="25" cy="25" r="18" fill="none" stroke="#fdffc3" stroke-width="2.5"/>
+          <path d="M25 14v12M25 30v2" stroke="#fdffc3" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h4>SOS escalation</h4>
+        <p>Your officer is first in the alert chain, notified before anyone else.</p>
+      </div>
+    </div>
+    <div class="prem-col reveal">
+      <div class="prem-ic-wrap">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+          <rect x="14" y="22" width="22" height="18" rx="3" fill="none" stroke="#fdffc3" stroke-width="2.5"/>
+          <path d="M19 22v-6a6 6 0 0112 0v6" fill="none" stroke="#fdffc3" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="25" cy="31" r="3" fill="#fdffc3"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Key holding</h4>
+        <p>Keys are securely held so officers can respond quickly when needed.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ FAQ ════════════════════════
-  From Figma: cream (#fef5ee)→yellow→blue gradient
-  Text: blue (#2949f5) on warm bg
-═══════════════════════════════════════════ -->
+<!-- Tab: blue → cream (premium → FAQ) -->
+<div class="tab-pc"></div>
+
+<!-- ═══════════ FAQ ══════════════════════════
+  Background: #fef5ee → #fdffc3 → #2949f5
+════════════════════════════════════════════ -->
 <section id="faq">
   <div class="faq-inner">
     <div class="faq-head">
-      <div class="tag-pill on-yellow reveal">FAQs</div>
-      <h2 class="reveal" style="color:var(--blue)">FAQs</h2>
-      <p class="reveal">When you want extra peace of mind, Glome adds a calm professional presence to your neighbourhood — led by a named local officer.</p>
+      <h2 class="reveal">FAQs</h2>
     </div>
     <div id="faqList">
       <div class="faq-item reveal">
-        <div class="faq-q">Is Glome free?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 13 13"><line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q">Is Glome free?<div class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><p>Glome's core features — neighbourhood alerts, the map, and basic safety tools — are free to use. Premium features like named officer patrols and key holding require a subscription.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">Do I need a card to join?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 13 13"><line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q">Do I need a card to join?<div class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><p>A physical card is required to verify your home address. We send it by post to confirm you live at the registered address — keeping the network trustworthy and anchored to real homes.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">Is my exact address public?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 13 13"><line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q">Is my exact address public?<div class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><p>No. Your exact address is never shared. Other neighbours see that someone on your street is a verified Glome member, but your specific house number remains private.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">How local is it?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 13 13"><line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q">How local is it?<div class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><p>Very local. Glome focuses on your street, your block, and the immediate area you walk every day. Safety feels real when it's human and close.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">What can neighbours reply with?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 13 13"><line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q">What can neighbours reply with?<div class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><p>Neighbours can acknowledge alerts, add context, or mark an issue as resolved. Responses are kept simple and constructive to avoid noise.</p></div>
       </div>
       <div class="faq-item reveal">
-        <div class="faq-q">Can I upgrade to Premium later?<div class="faq-ico"><svg width="13" height="13" viewBox="0 0 13 13"><line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q">Can I upgrade to Premium later?<div class="faq-ico"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><p>Yes. You can start free and upgrade any time. Premium availability depends on whether an officer has been assigned to your area.</p></div>
       </div>
     </div>
 
-    <!-- Welcome to the neighborhood (inside FAQ section in Figma) -->
-    <div style="margin-top:100px;text-align:center">
-      <h2 class="reveal" style="color:var(--blue2);font-size:clamp(44px,6vw,88px);margin-bottom:44px;letter-spacing:-.03em">Welcome to the<br>neighborhood</h2>
-      <div class="fcta-btns reveal" style="opacity:1;transform:none;display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-        <button class="btn-big btn-big-y">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.3.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="currentColor"/></svg>
-          Download for iOS
-        </button>
-        <button class="btn-big btn-big-o">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3.18 23.76c.29.16.62.19.94.09l11.84-6.76-2.48-2.48-10.3 9.15zM.49 2.03C.18 2.4 0 2.96 0 3.68v16.64c0 .72.18 1.28.49 1.65l.09.08 9.32-9.32v-.22L.58 3.19l-.09.08zM20.69 10.4l-2.67-1.52-2.77 2.77 2.77 2.77 2.68-1.52c.76-.43.76-1.13 0-1.56l-.01.06zM3.18.24l10.3 9.14 2.48-2.48L4.12.14C3.8.04 3.47.08 3.18.24z" fill="currentColor"/></svg>
-          Download for Android
-        </button>
+    <!-- Welcome CTA -->
+    <div class="faq-cta">
+      <h2>"Welcome to the<br>neighborhood"</h2>
+      <div class="faq-cta-btns">
+        <button class="btn-pill btn-pill-blue">Download for iOS</button>
+        <button class="btn-pill btn-pill-blue-outline">Download for Android</button>
       </div>
     </div>
   </div>
+
+  <!-- City illustration placeholder -->
+  <div class="city-art" aria-hidden="true">
+    <svg viewBox="0 0 1728 1001" fill="none" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="cityGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2949f5"/>
+          <stop offset="100%" stop-color="#0c112b"/>
+        </linearGradient>
+        <radialGradient id="cityGlow" cx="50%" cy="70%" r="60%">
+          <stop offset="0%" stop-color="#2949f5" stop-opacity=".4"/>
+          <stop offset="100%" stop-color="#0c112b" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1728" height="1001" fill="url(#cityGrad)"/>
+      <rect width="1728" height="1001" fill="url(#cityGlow)"/>
+      <!-- Street grid -->
+      <rect x="0" y="600" width="1728" height="8" fill="rgba(41,73,245,.3)"/>
+      <rect x="0" y="720" width="1728" height="8" fill="rgba(41,73,245,.2)"/>
+      <rect x="0" y="820" width="1728" height="8" fill="rgba(41,73,245,.15)"/>
+      <rect x="200" y="0" width="8" height="1001" fill="rgba(41,73,245,.15)"/>
+      <rect x="450" y="0" width="8" height="1001" fill="rgba(41,73,245,.12)"/>
+      <rect x="700" y="0" width="8" height="1001" fill="rgba(41,73,245,.15)"/>
+      <rect x="950" y="0" width="8" height="1001" fill="rgba(41,73,245,.12)"/>
+      <rect x="1200" y="0" width="8" height="1001" fill="rgba(41,73,245,.15)"/>
+      <rect x="1450" y="0" width="8" height="1001" fill="rgba(41,73,245,.12)"/>
+      <!-- Buildings silhouette -->
+      <g fill="#14277c">
+        <rect x="20" y="200" width="170" height="400"/>
+        <rect x="210" y="280" width="230" height="320"/>
+        <rect x="460" y="150" width="230" height="450"/>
+        <rect x="710" y="250" width="230" height="350"/>
+        <rect x="960" y="100" width="230" height="500"/>
+        <rect x="1210" y="200" width="230" height="400"/>
+        <rect x="1460" y="300" width="260" height="300"/>
+      </g>
+      <!-- Building windows -->
+      <g fill="#fdffc3" opacity=".15">
+        <rect x="40" y="220" width="18" height="24" rx="2"/><rect x="70" y="220" width="18" height="24" rx="2"/>
+        <rect x="100" y="220" width="18" height="24" rx="2"/><rect x="130" y="220" width="18" height="24" rx="2"/>
+        <rect x="40" y="260" width="18" height="24" rx="2"/><rect x="70" y="260" width="18" height="24" rx="2"/>
+        <rect x="480" y="170" width="18" height="24" rx="2"/><rect x="510" y="170" width="18" height="24" rx="2"/>
+        <rect x="540" y="170" width="18" height="24" rx="2"/><rect x="570" y="170" width="18" height="24" rx="2"/>
+        <rect x="480" y="210" width="18" height="24" rx="2"/><rect x="540" y="210" width="18" height="24" rx="2"/>
+        <rect x="980" y="120" width="18" height="24" rx="2"/><rect x="1010" y="120" width="18" height="24" rx="2"/>
+        <rect x="1040" y="120" width="18" height="24" rx="2"/><rect x="1070" y="120" width="18" height="24" rx="2"/>
+        <rect x="1100" y="120" width="18" height="24" rx="2"/>
+        <rect x="980" y="160" width="18" height="24" rx="2"/><rect x="1040" y="160" width="18" height="24" rx="2"/>
+        <rect x="1100" y="160" width="18" height="24" rx="2"/>
+      </g>
+      <!-- Glowing windows -->
+      <g fill="#fdffc3" opacity=".55">
+        <rect x="100" y="260" width="18" height="24" rx="2"/>
+        <rect x="510" y="210" width="18" height="24" rx="2"/>
+        <rect x="570" y="210" width="18" height="24" rx="2"/>
+        <rect x="1010" y="160" width="18" height="24" rx="2"/>
+        <rect x="1070" y="160" width="18" height="24" rx="2"/>
+      </g>
+      <!-- Home pins on map -->
+      <g>
+        <circle cx="340" cy="560" r="8" fill="#fdffc3" opacity=".8"/>
+        <circle cx="340" cy="560" r="18" fill="none" stroke="#fdffc3" stroke-width="1.5" opacity=".3"/>
+        <circle cx="600" cy="490" r="8" fill="#fdffc3" opacity=".8"/>
+        <circle cx="600" cy="490" r="18" fill="none" stroke="#fdffc3" stroke-width="1.5" opacity=".3"/>
+        <circle cx="860" cy="540" r="8" fill="#2949f5" opacity=".9"/>
+        <circle cx="860" cy="540" r="18" fill="none" stroke="#2949f5" stroke-width="1.5" opacity=".4"/>
+        <circle cx="1120" cy="470" r="8" fill="#fdffc3" opacity=".8"/>
+        <circle cx="1120" cy="470" r="18" fill="none" stroke="#fdffc3" stroke-width="1.5" opacity=".3"/>
+        <circle cx="1380" cy="520" r="8" fill="#94d389" opacity=".8"/>
+        <circle cx="1380" cy="520" r="18" fill="none" stroke="#94d389" stroke-width="1.5" opacity=".3"/>
+      </g>
+      <!-- Bottom gradient overlay -->
+      <rect x="0" y="800" width="1728" height="201" fill="url(#cityGrad)" opacity=".9"/>
+    </svg>
+  </div>
 </section>
 
-<!-- ═══════════ FOOTER ═════════════════════
-  Dark navy, blue wave graphics, yellow text
-═══════════════════════════════════════════ -->
+<!-- ═══════════ FOOTER ═════════════════════════
+  Dark navy, yellow text, logo center, social right
+════════════════════════════════════════════ -->
 <footer>
-  <!-- Blue wave from Figma (two overlapping vectors) -->
-  <svg class="foot-wave" viewBox="0 0 1728 200" fill="none" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 120 C200 40 400 160 600 100 C800 40 1000 160 1200 100 C1400 40 1600 160 1728 100 L1728 200 L0 200 Z" fill="#0052d6" opacity=".5"/>
-    <path d="M0 160 C250 80 500 180 750 130 C1000 80 1250 180 1500 130 C1600 110 1680 140 1728 120 L1728 200 L0 200 Z" fill="#0052d6" opacity=".35"/>
-  </svg>
   <div class="foot-inner">
     <nav class="foot-nav">
       <a href="#">Join</a>
@@ -974,12 +1167,12 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
       <a href="#">Careers</a>
     </nav>
     <a href="#" class="foot-logo" aria-label="Glome">
-      <svg viewBox="0 0 108 22" fill="none">
-        <path d="M0 11C0 4.93 4.93 0 11 0c3.86 0 7.3 1.77 9.6 4.56l-3.4 3.4C15.7 6.4 13.46 5.28 11 5.28 7.27 5.28 4.28 8.27 4.28 11s2.99 5.72 6.72 5.72 6.72-2.57 6.72-5.72H12.5V7.44H24.4c.17.73.26 1.5.26 2.28-.4 6.07-5.37 11-12 11S0 17.07 0 11z" fill="#FDFFC3"/>
-        <path d="M28 0h4.8v17.6H43V22H28V0z" fill="#FDFFC3"/>
-        <path d="M59 0C52.37 0 47 4.93 47 11s5.37 11 12 11 12-4.93 12-11S65.63 0 59 0zm0 5.28c3.73 0 6.72 2.99 6.72 5.72s-2.99 5.72-6.72 5.72-6.72-2.57-6.72-5.72S55.27 5.28 59 5.28z" fill="#FDFFC3"/>
-        <path d="M75 0h5.4l6 10.56L92.4 0h5.4v22H93V9.8L86.4 21.2 79.8 9.8V22H75V0z" fill="#FDFFC3"/>
-        <path d="M103 0h18v5.28H108.28v5.04H120v5.28H108.28V16.72H121V22H103V0z" fill="#FDFFC3" transform="translate(-5)"/>
+      <svg viewBox="0 0 152 30" fill="none">
+        <path d="M0 15C0 6.716 6.716 0 15 0c5.268 0 9.955 2.41 13.082 6.218l-4.636 4.636C21.591 8.726 18.45 7.2 15 7.2c-4.309 0-7.8 3.491-7.8 7.8s3.491 7.8 7.8 7.8 7.8-3.502 7.8-7.8H17.04V10.14H33.27c.227.995.354 2.045.354 3.107C33.078 21.81 24.847 30 15 30S0 23.284 0 15z" fill="#FDFFC3"/>
+        <path d="M38.2 0h6.545v24H58V30H38.2V0z" fill="#FDFFC3"/>
+        <path d="M80.5 0C71.716 0 64 6.716 64 15s7.716 15 16.5 15 16.5-6.716 16.5-15S89.284 0 80.5 0zm0 7.2c5.082 0 9.154 3.491 9.154 7.8s-4.072 7.8-9.154 7.8-9.154-3.502-9.154-7.8S75.418 7.2 80.5 7.2z" fill="#FDFFC3"/>
+        <path d="M102 0h7.364l8.182 14.4L125.727 0h7.364v30H126V13.364L116.545 28.8 107.09 13.364V30H102V0z" fill="#FDFFC3"/>
+        <path d="M140 0h24v7.2h-16.91v6.872H163v7.2h-15.91v6.527H164V30h-24V0z" fill="#FDFFC3"/>
       </svg>
     </a>
     <nav class="foot-social">
@@ -991,74 +1184,57 @@ footer{background:var(--navy2);padding:0 0 40px;position:relative;overflow:hidde
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ══ NAV ════════════════════════════════ */
+/* ══ NAV scroll class ══════════════════════ */
 ScrollTrigger.create({
   start:'top -10',
-  onUpdate(s){ document.getElementById('nav').classList.toggle('dark', s.scroll()>10); }
+  onUpdate(s){ document.getElementById('nav').classList.toggle('scrolled', s.scroll()>10); }
 });
 
-/* ══ HERO — 6 phases on scroll ══════════
-  Triggers as user scrolls through hero's 100vh
-  Phase 1→2: hero eyebrow + words fly up, dots light up
-  Phase 2→3: row2 dots light, spotlight grows
-  Phase 3→4: row3+4 dots, spotlight bigger, map brighter
-  Phase 4→5: spotlight max, all dots bright
-  Phase 5→6: text begins to fade subtly, map fills view
-════════════════════════════════════════ */
-const heroTL = gsap.timeline({ delay:.25 });
-
-// Phase 1 (page load entry)
+/* ══ HERO entry animation ══════════════════
+  Phase 1: eyebrow + words fly up, dots light
+════════════════════════════════════════════ */
+const heroTL = gsap.timeline({ delay:.2 });
 heroTL
-  .to('.hero-eye', { opacity:1, y:0, duration:.7, ease:'power2.out' })
-  .to('.w', { y:0, duration:1.1, stagger:.08, ease:'power4.out' }, '-=.5')
-  .to('#hrow1', { opacity:.85, duration:.8, stagger:.1, ease:'power2.out' }, '-=.8')
-  .to('.fp', { opacity:1, duration:.5, stagger:{ each:.12, from:'random' }, ease:'back.out(1.8)' }, '-=.7')
-  .to('.scroll-hint', { opacity:1, duration:.5 }, '-=.3');
+  .to('.hero-eye',  { opacity:1, y:0, duration:.7, ease:'power2.out' })
+  .to('.w',         { y:0, duration:1.1, stagger:.07, ease:'power4.out' }, '-=.5')
+  .to('#hrow1',     { opacity:.85, duration:.8, ease:'power2.out' }, '-=.8')
+  .to('.fp',        { opacity:1, duration:.5, stagger:{ each:.1, from:'random' }, ease:'back.out(1.8)' }, '-=.7')
+  .to('.scroll-hint',{ opacity:1, duration:.5 }, '-=.3');
 
-// Hero scroll phases (scrub based)
+/* Hero scroll phases */
 const heroPhases = gsap.timeline({ paused:true });
 heroPhases
-  // Phase 2: spotlight begins, map brighter
-  .to('#spotlight',    { scale:1.2, duration:1 }, 0)
-  .to('#spotCore',     { scale:1.4, duration:1 }, 0)
-  .to('#heroMap',      { opacity:.35, duration:1 }, 0)
-  .to('#hrow2',        { opacity:.8, duration:.8 }, 0.1)
+  .to('#spotlight',  { scale:1.4, duration:1 }, 0)
+  .to('#spotCore',   { scale:1.6, duration:1 }, 0)
+  .to('#heroMap',    { opacity:.35, duration:1 }, 0)
+  .to('#hrow2',      { opacity:.8, duration:.8 }, 0.1)
 
-  // Phase 3: spotlight grows more, row 3 lights up
-  .to('#spotlight',    { scale:2, duration:1 }, 1)
-  .to('#spotCore',     { scale:2.2, duration:1 }, 1)
-  .to('#heroMap',      { opacity:.5, duration:1 }, 1)
-  .to('#hrow3',        { opacity:.8, duration:.8 }, 1.1)
+  .to('#spotlight',  { scale:2.4, duration:1 }, 1)
+  .to('#spotCore',   { scale:2.6, duration:1 }, 1)
+  .to('#heroMap',    { opacity:.5, duration:1 }, 1)
+  .to('#hrow3',      { opacity:.8, duration:.8 }, 1.1)
 
-  // Phase 4: large spotlight, all rows lit
-  .to('#spotlight',    { scale:3.2, duration:1 }, 2)
-  .to('#spotCore',     { scale:3.5, duration:1 }, 2)
-  .to('#heroMap',      { opacity:.6, duration:1 }, 2)
-  .to('#hrow4',        { opacity:.8, duration:.8 }, 2.1)
+  .to('#spotlight',  { scale:3.8, duration:1 }, 2)
+  .to('#spotCore',   { scale:4.0, duration:1 }, 2)
+  .to('#heroMap',    { opacity:.6, duration:1 }, 2)
+  .to('#hrow4',      { opacity:.8, duration:.8 }, 2.1)
 
-  // Phase 5: spotlight at max, hero text shifts
-  .to('#spotlight',    { scale:4.8, duration:1 }, 3)
-  .to('#spotCore',     { scale:5, duration:1 }, 3)
-  .to('.hero-inner',   { y:-24, duration:1 }, 3)
-  .to('#heroMap',      { opacity:.7, duration:1 }, 3)
+  .to('#spotlight',  { scale:5.5, duration:1 }, 3)
+  .to('#spotCore',   { scale:5.8, duration:1 }, 3)
+  .to('.hero-inner', { y:-20, duration:1 }, 3)
 
-  // Phase 6: text fades slightly, full network visible
-  .to('#spotlight',    { scale:6.5, opacity:.85, duration:1 }, 4)
-  .to('.hero-inner',   { opacity:.6, y:-50, duration:1 }, 4)
-  .to('#heroMap',      { opacity:.8, duration:1 }, 4);
+  .to('#spotlight',  { scale:7.5, opacity:.8, duration:1 }, 4)
+  .to('.hero-inner', { opacity:.55, y:-50, duration:1 }, 4)
+  .to('#heroMap',    { opacity:.75, duration:1 }, 4);
 
 ScrollTrigger.create({
-  trigger: '#hero',
-  start: 'top top',
-  end: 'bottom top',
-  scrub: 1.5,
-  onUpdate(self) {
-    heroPhases.progress(self.progress);
-  }
+  trigger:'#hero', start:'top top', end:'bottom top',
+  scrub:1.5,
+  onUpdate(self){ heroPhases.progress(self.progress); }
 });
 
-/* ══ INTRO ══════════════════════════════ */
-gsap.to('.intro-p', {
+/* ══ INTRO ══════════════════════════════════ */
+gsap.to('.intro-text', {
   scrollTrigger:{ trigger:'#intro', start:'top 82%' },
   opacity:1, y:0, duration:.9, ease:'power3.out'
 });
@@ -1067,38 +1243,15 @@ gsap.to('.intro-btns', {
   opacity:1, y:0, duration:.9, delay:.15, ease:'power3.out'
 });
 
-/* ══ PRODUCT INTRO ══════════════════════ */
+/* ══ PRODUCT INTRO ══════════════════════════ */
 gsap.to('#prodIntro', {
   scrollTrigger:{ trigger:'#product', start:'top 80%' },
   opacity:1, y:0, duration:.9, ease:'power3.out'
 });
 
-/* ══ STICKY MAP SCROLL SYSTEM ═══════════
-
-  Figma scroll triggers (relative to Scroll frame = 4050px):
-
-  ALERT SECTION (0→1300px, 32% of 4050):
-    Trigger-0:  0→100  (0→2.5%)  → Alert A: panel in, rings appear
-    Trigger-1:  100→300 (2.5→7.4%) → Alert B: ring 2 expands
-    Trigger-2:  300→400 (7.4→9.9%) → Alert C: ring 3 + neighbour 1
-    Trigger-3:  400→600 (9.9→14.8%) → Alert D: neighbours 2+3
-    Trigger-4:  600→1300 (14.8→32%) → Alert sustained
-
-  WALK SECTION (1300→2500px, 32→61.7%):
-    Trigger-1:  0→200  (32→36.9%) → Walk A: panel switch, avatar appears
-    Trigger-2:  200→350 (36.9→40.5%) → Walk B: path draws 33%
-    Trigger-3:  350→500 (40.5→43.2%) → Walk C: path draws 66%
-    Trigger-3B: 500→650 (43.2→46%) → Walk D: path draws 90%, checkpoint 1
-    Trigger-4:  650→1100 (46→59.3%) → Walk E: path complete, checkpoint 2
-    Trigger-5:  1100→1200 (59.3→61.7%) → Walk sustained
-
-  REPORTS SECTION (2500→3700px, 61.7→91.4%):
-    Trigger-1:  0→100  (61.7→64.2%) → Reports A: panel switch, pin 1
-    Trigger-2:  100→200 (64.2→66.7%) → Reports B: pin 2
-    Trigger-3:  200→300 (66.7→69.1%) → Reports C: pin 3
-    Trigger-4:  300→500 (69.1→73.8%) → Reports D: pin 4+5
-    Trigger-5:  500→1200 (73.8→91.4%) → Reports sustained
-════════════════════════════════════════ */
+/* ══ STICKY MAP SCROLL ══════════════════════
+  Alert: 0–32% · Walk: 32–61.7% · Report: 61.7–91.4%
+════════════════════════════════════════════ */
 const slides = ['fs1','fs2','fs3'].map(id=>document.getElementById(id));
 const layers = {
   alert:  document.getElementById('lAlert'),
@@ -1107,281 +1260,192 @@ const layers = {
 };
 const wpath = document.getElementById('wpath');
 const wavatar = document.getElementById('wavatar');
+let curSlide=0, alertStep=-1, walkStep=-1, reportStep=-1;
 
-let curSlide = 0;
-let alertStep = -1, walkStep = -1, reportStep = -1;
-
-// Helper: switch active slide
-function goSlide(idx) {
-  if (idx === curSlide) return;
+function goSlide(idx){
+  if(idx===curSlide) return;
   slides[curSlide].classList.remove('on');
   slides[idx].classList.add('on');
-  curSlide = idx;
+  curSlide=idx;
 }
-
-// Helper: show/hide map layers
-function showLayer(name) {
-  Object.entries(layers).forEach(([k,el]) => {
-    if (k === name) { el.classList.remove('ml-off'); }
-    else { el.classList.add('ml-off'); }
+function showLayer(name){
+  Object.entries(layers).forEach(([k,el])=>{
+    el.classList.toggle('ml-off', k!==name);
   });
 }
 
-/* ─ Alert animations (5 sub-steps) ─ */
-function doAlertStep(step) {
-  if (step === alertStep) return;
-  alertStep = step;
-  showLayer('alert');
-  goSlide(0);
-
-  // Card border draw on panel
-  const cb = document.getElementById('cb1');
-  if (step >= 1) cb.classList.add('card-border-drawn');
-
-  // Progress bar
-  document.getElementById('fp1').style.width = Math.min(100, step * 25) + '%';
-
-  const ar1=document.getElementById('ar1'), ar2=document.getElementById('ar2'), ar3=document.getElementById('ar3');
-  const rpa=[document.getElementById('rpa1'),document.getElementById('rpa2'),document.getElementById('rpa3'),document.getElementById('rpa4')];
-
-  if (step === 0) {
-    // Alert A: center icon + ring 1
-    gsap.to('#ar0', { opacity:1, scale:1, duration:.5, ease:'back.out(2)' });
-    gsap.fromTo(ar1, { scale:.3, opacity:0, transformOrigin:'264px 310px' }, { scale:1, opacity:1, duration:.7, ease:'back.out(1.5)' });
-    gsap.to(ar1, { scale:1.08, duration:1.3, yoyo:true, repeat:-1, ease:'sine.inOut', delay:.7 });
+function doAlertStep(step){
+  if(step===alertStep) return;
+  alertStep=step; showLayer('alert'); goSlide(0);
+  const cb=document.getElementById('cb1');
+  if(step>=1) cb.classList.add('card-border-drawn');
+  document.getElementById('fp1').style.width=Math.min(100,step*25)+'%';
+  const ar1=document.getElementById('ar1'),ar2=document.getElementById('ar2'),ar3=document.getElementById('ar3');
+  const rpa=['rpa1','rpa2','rpa3','rpa4'].map(id=>document.getElementById(id));
+  if(step===0){
+    gsap.to('#ar0',{opacity:1,scale:1,duration:.5,ease:'back.out(2)'});
+    gsap.fromTo(ar1,{scale:.3,opacity:0,transformOrigin:'264px 310px'},{scale:1,opacity:1,duration:.7,ease:'back.out(1.5)'});
+    gsap.to(ar1,{scale:1.08,duration:1.3,yoyo:true,repeat:-1,ease:'sine.inOut',delay:.7});
   }
-  if (step === 1) {
-    // Alert B: ring 2
-    gsap.fromTo(ar2, { scale:.4, opacity:0, transformOrigin:'264px 310px' }, { scale:1, opacity:1, duration:.8, ease:'back.out(1.2)' });
-    gsap.to(ar2, { scale:1.06, duration:1.6, yoyo:true, repeat:-1, ease:'sine.inOut' });
-  }
-  if (step === 2) {
-    // Alert C: ring 3 + neighbour 1
-    gsap.fromTo(ar3, { scale:.5, opacity:0, transformOrigin:'264px 310px' }, { scale:1, opacity:1, duration:.9, ease:'back.out(1.1)' });
-    gsap.fromTo(rpa[0], { opacity:0, y:-12, scale:.6 }, { opacity:1, y:0, scale:1, duration:.5, ease:'back.out(2)' });
-  }
-  if (step === 3) {
-    // Alert D: neighbours 2+3
-    gsap.fromTo(rpa[1], { opacity:0, y:-12, scale:.6 }, { opacity:1, y:0, scale:1, duration:.5, ease:'back.out(2)' });
-    gsap.fromTo(rpa[2], { opacity:0, y:-12, scale:.6 }, { opacity:1, y:0, scale:1, duration:.5, delay:.15, ease:'back.out(2)' });
-  }
-  if (step === 4) {
-    // Alert E: neighbour 4 (furthest)
-    gsap.fromTo(rpa[3], { opacity:0, y:-12, scale:.6 }, { opacity:1, y:0, scale:1, duration:.5, ease:'back.out(2)' });
-  }
+  if(step===1){ gsap.fromTo(ar2,{scale:.4,opacity:0,transformOrigin:'264px 310px'},{scale:1,opacity:1,duration:.8,ease:'back.out(1.2)'}); gsap.to(ar2,{scale:1.06,duration:1.6,yoyo:true,repeat:-1,ease:'sine.inOut'}); }
+  if(step===2){ gsap.fromTo(ar3,{scale:.5,opacity:0,transformOrigin:'264px 310px'},{scale:1,opacity:1,duration:.9,ease:'back.out(1.1)'}); gsap.fromTo(rpa[0],{opacity:0,y:-12,scale:.6},{opacity:1,y:0,scale:1,duration:.5,ease:'back.out(2)'}); }
+  if(step===3){ gsap.fromTo(rpa[1],{opacity:0,y:-12,scale:.6},{opacity:1,y:0,scale:1,duration:.5,ease:'back.out(2)'}); gsap.fromTo(rpa[2],{opacity:0,y:-12,scale:.6},{opacity:1,y:0,scale:1,duration:.5,delay:.15,ease:'back.out(2)'}); }
+  if(step===4){ gsap.fromTo(rpa[3],{opacity:0,y:-12,scale:.6},{opacity:1,y:0,scale:1,duration:.5,ease:'back.out(2)'}); }
 }
 
-/* ─ Walk animations (6 sub-steps) ─ */
-function doWalkStep(step) {
-  if (step === walkStep) return;
-  walkStep = step;
-  showLayer('walk');
-  goSlide(1);
-
-  document.getElementById('fp2').style.width = Math.min(100, step * 20) + '%';
-  const cb = document.getElementById('cb2');
-  if (step >= 1) cb.classList.add('card-border-drawn');
-
-  const pathLen = wpath.getTotalLength();
-  const rwp = [document.getElementById('rwp1'), document.getElementById('rwp2')];
-
-  if (step === 0) {
-    // Walk A: avatar appears at start position
-    gsap.set(wpath, { strokeDashoffset: pathLen });
-    gsap.set(wavatar, { opacity:0 });
-    const pt = wpath.getPointAtLength(0);
-    wavatar.setAttribute('transform', `translate(${pt.x},${pt.y})`);
-    gsap.to(wavatar, { opacity:1, duration:.4, ease:'power2.out' });
+function doWalkStep(step){
+  if(step===walkStep) return;
+  walkStep=step; showLayer('walk'); goSlide(1);
+  document.getElementById('fp2').style.width=Math.min(100,step*20)+'%';
+  const cb=document.getElementById('cb2');
+  if(step>=1) cb.classList.add('card-border-drawn');
+  const pathLen=wpath.getTotalLength();
+  const rwp=['rwp1','rwp2'].map(id=>document.getElementById(id));
+  if(step===0){
+    gsap.set(wpath,{strokeDashoffset:pathLen}); gsap.set(wavatar,{opacity:0});
+    const pt=wpath.getPointAtLength(0);
+    wavatar.setAttribute('transform',`translate(${pt.x},${pt.y})`);
+    gsap.to(wavatar,{opacity:1,duration:.4,ease:'power2.out'});
   }
-  if (step === 1) {
-    // Walk B: path 33% drawn, avatar walks to 33%
-    animateWalk(pathLen * .33, .33, 1.2);
-  }
-  if (step === 2) {
-    // Walk C: path 60%
-    animateWalk(pathLen * .60, .60, 1.2);
-  }
-  if (step === 3) {
-    // Walk D: path 80%, checkpoint 1 appears
-    animateWalk(pathLen * .80, .80, 1.2);
-    gsap.fromTo(rwp[0], { opacity:0, scale:.5 }, { opacity:1, scale:1, duration:.4, ease:'back.out(2)', delay:.8 });
-  }
-  if (step === 4) {
-    // Walk E: path 95%, checkpoint 2
-    animateWalk(pathLen * .95, .95, 1.4);
-    gsap.fromTo(rwp[1], { opacity:0, scale:.5 }, { opacity:1, scale:1, duration:.4, ease:'back.out(2)', delay:1.0 });
-  }
-  if (step === 5) {
-    // Walk F: path complete, home reached
-    animateWalk(pathLen, 1, 1.0);
-  }
+  if(step===1) animateWalk(pathLen*.33,.33,1.2);
+  if(step===2) animateWalk(pathLen*.60,.60,1.2);
+  if(step===3){ animateWalk(pathLen*.80,.80,1.2); gsap.fromTo(rwp[0],{opacity:0,scale:.5},{opacity:1,scale:1,duration:.4,ease:'back.out(2)',delay:.8}); }
+  if(step===4){ animateWalk(pathLen*.95,.95,1.4); gsap.fromTo(rwp[1],{opacity:0,scale:.5},{opacity:1,scale:1,duration:.4,ease:'back.out(2)',delay:1.0}); }
+  if(step===5) animateWalk(pathLen,1,1.0);
+}
+function animateWalk(targetOffset,targetT,dur){
+  const pathLen=wpath.getTotalLength();
+  const currentOffset=parseFloat(wpath.getAttribute('stroke-dashoffset')||pathLen);
+  gsap.to(wpath,{strokeDashoffset:pathLen-targetOffset,duration:dur,ease:'power2.inOut'});
+  const proxy={t:(pathLen-currentOffset)/pathLen};
+  gsap.to(proxy,{t:targetT,duration:dur,ease:'power2.inOut',onUpdate(){
+    const pt=wpath.getPointAtLength(proxy.t*pathLen);
+    wavatar.setAttribute('transform',`translate(${pt.x},${pt.y})`);
+  }});
 }
 
-function animateWalk(targetOffset, targetT, dur) {
-  const pathLen = wpath.getTotalLength();
-  const currentOffset = parseFloat(wpath.getAttribute('stroke-dashoffset') || pathLen);
-  gsap.to(wpath, { strokeDashoffset: pathLen - targetOffset, duration: dur, ease:'power2.inOut' });
-  const proxy = { t: (pathLen - currentOffset) / pathLen };
-  gsap.to(proxy, {
-    t: targetT, duration: dur, ease:'power2.inOut',
-    onUpdate() {
-      const pt = wpath.getPointAtLength(proxy.t * pathLen);
-      wavatar.setAttribute('transform', `translate(${pt.x},${pt.y})`);
-    }
-  });
+function doReportStep(step){
+  if(step===reportStep) return;
+  reportStep=step; showLayer('report'); goSlide(2);
+  document.getElementById('fp3').style.width=Math.min(100,step*25)+'%';
+  const cb=document.getElementById('cb3');
+  if(step>=1) cb.classList.add('card-border-drawn');
+  const pins=['rrp1','rrp2','rrp3','rrp4','rrp5'].map(id=>document.getElementById(id));
+  if(step===0) gsap.fromTo(pins[0],{opacity:0,y:-18,scale:.6},{opacity:1,y:0,scale:1,duration:.6,ease:'back.out(2)'});
+  if(step===1) gsap.fromTo(pins[1],{opacity:0,y:-18,scale:.6},{opacity:1,y:0,scale:1,duration:.6,ease:'back.out(2)'});
+  if(step===2) gsap.fromTo(pins[2],{opacity:0,y:-18,scale:.6},{opacity:1,y:0,scale:1,duration:.6,ease:'back.out(2)'});
+  if(step===3){ gsap.fromTo(pins[3],{opacity:0,y:-18,scale:.6},{opacity:1,y:0,scale:1,duration:.6,ease:'back.out(2)'}); gsap.fromTo(pins[4],{opacity:0,y:-18,scale:.6},{opacity:1,y:0,scale:1,duration:.6,delay:.18,ease:'back.out(2)'}); }
 }
 
-/* ─ Report animations (5 sub-steps) ─ */
-function doReportStep(step) {
-  if (step === reportStep) return;
-  reportStep = step;
-  showLayer('report');
-  goSlide(2);
-
-  document.getElementById('fp3').style.width = Math.min(100, step * 25) + '%';
-  const cb = document.getElementById('cb3');
-  if (step >= 1) cb.classList.add('card-border-drawn');
-
-  const pins = ['rrp1','rrp2','rrp3','rrp4','rrp5'].map(id=>document.getElementById(id));
-
-  if (step === 0) {
-    gsap.fromTo(pins[0], { opacity:0, y:-18, scale:.6 }, { opacity:1, y:0, scale:1, duration:.6, ease:'back.out(2)' });
-  }
-  if (step === 1) {
-    gsap.fromTo(pins[1], { opacity:0, y:-18, scale:.6 }, { opacity:1, y:0, scale:1, duration:.6, ease:'back.out(2)' });
-  }
-  if (step === 2) {
-    gsap.fromTo(pins[2], { opacity:0, y:-18, scale:.6 }, { opacity:1, y:0, scale:1, duration:.6, ease:'back.out(2)' });
-  }
-  if (step === 3) {
-    gsap.fromTo(pins[3], { opacity:0, y:-18, scale:.6 }, { opacity:1, y:0, scale:1, duration:.6, ease:'back.out(2)' });
-    gsap.fromTo(pins[4], { opacity:0, y:-18, scale:.6 }, { opacity:1, y:0, scale:1, duration:.6, delay:.18, ease:'back.out(2)' });
-  }
-}
-
-/* ── Main ScrollTrigger for sticky map ── */
 ScrollTrigger.create({
-  trigger: '.map-wrap',
-  start: 'top top',
-  end: 'bottom bottom',
-  pin: '#mapSticky',
-  pinSpacing: false,
-  onUpdate(self) {
-    const p = self.progress; // 0→1
-
-    // Map subtle zoom on scroll
-    gsap.set('#mapSvg', { scale: 1 + p * .06 });
-
-    // ALERT SECTION: 0→32% of scroll → sub-steps 0-4
-    if (p < 0.32) {
-      const ap = p / 0.32; // 0→1 within alerts zone
-      if      (ap < 0.025) doAlertStep(0);
-      else if (ap < 0.074) doAlertStep(1);
-      else if (ap < 0.099) doAlertStep(2);
-      else if (ap < 0.148) doAlertStep(3);
-      else                  doAlertStep(4);
-    }
-    // WALK SECTION: 32→61.7% → sub-steps 0-5
-    else if (p < 0.617) {
-      const wp2 = (p - 0.32) / (0.617 - 0.32); // 0→1
-      if      (wp2 < 0.16)  doWalkStep(0);
-      else if (wp2 < 0.295) doWalkStep(1);
-      else if (wp2 < 0.428) doWalkStep(2);
-      else if (wp2 < 0.561) doWalkStep(3);
-      else if (wp2 < 0.891) doWalkStep(4);
-      else                   doWalkStep(5);
-    }
-    // REPORTS SECTION: 61.7→91.4% → sub-steps 0-4
-    else if (p < 0.914) {
-      const rp2 = (p - 0.617) / (0.914 - 0.617); // 0→1
-      if      (rp2 < 0.083) doReportStep(0);
-      else if (rp2 < 0.167) doReportStep(1);
-      else if (rp2 < 0.25)  doReportStep(2);
-      else                   doReportStep(3);
-    }
-    // Space section (91.4→100%)
-    else {
-      // Keep last state
+  trigger:'.map-wrap', start:'top top', end:'bottom bottom',
+  pin:'#mapSticky', pinSpacing:false,
+  onUpdate(self){
+    const p=self.progress;
+    gsap.set('#mapSvg',{scale:1+p*.06});
+    if(p<0.32){
+      const ap=p/0.32;
+      if(ap<0.025) doAlertStep(0);
+      else if(ap<0.074) doAlertStep(1);
+      else if(ap<0.099) doAlertStep(2);
+      else if(ap<0.148) doAlertStep(3);
+      else doAlertStep(4);
+    } else if(p<0.617){
+      const wp2=(p-0.32)/(0.617-0.32);
+      if(wp2<0.16) doWalkStep(0);
+      else if(wp2<0.295) doWalkStep(1);
+      else if(wp2<0.428) doWalkStep(2);
+      else if(wp2<0.561) doWalkStep(3);
+      else if(wp2<0.891) doWalkStep(4);
+      else doWalkStep(5);
+    } else if(p<0.914){
+      const rp2=(p-0.617)/(0.914-0.617);
+      if(rp2<0.083) doReportStep(0);
+      else if(rp2<0.167) doReportStep(1);
+      else if(rp2<0.25) doReportStep(2);
+      else doReportStep(3);
+    } else {
       doReportStep(3);
     }
   }
 });
+setTimeout(()=>doAlertStep(0), 700);
 
-// Initialise first state after small delay
-setTimeout(() => doAlertStep(0), 700);
-
-/* ══ HOW IT WORKS ════════════════════════ */
-gsap.utils.toArray('.hiw-card').forEach((c, i) => {
-  gsap.to(c, {
+/* ══ HOW IT WORKS ═══════════════════════════ */
+gsap.utils.toArray('.hiw-card').forEach((c,i)=>{
+  gsap.to(c,{
     scrollTrigger:{ trigger:c, start:'top 88%' },
-    opacity:1, y:0, duration:.8, delay:i*.12, ease:'power3.out'
+    opacity:1, y:0, duration:.8, delay:i*.14, ease:'power3.out'
   });
-  c.addEventListener('mousemove', e => {
+  c.addEventListener('mousemove',e=>{
     const r=c.getBoundingClientRect();
-    gsap.to(c, { rotateY:(e.clientX-r.left)/r.width*10-5, rotateX:-((e.clientY-r.top)/r.height*10-5), transformPerspective:800, duration:.3 });
+    gsap.to(c,{rotateY:(e.clientX-r.left)/r.width*10-5,rotateX:-((e.clientY-r.top)/r.height*10-5),transformPerspective:800,duration:.3});
   });
-  c.addEventListener('mouseleave', () => gsap.to(c, { rotateY:0, rotateX:0, duration:.5 }));
+  c.addEventListener('mouseleave',()=>gsap.to(c,{rotateY:0,rotateX:0,duration:.5}));
 });
 
-/* ══ PREMIUM ═════════════════════════════ */
+/* ══ PREMIUM ════════════════════════════════ */
 gsap.fromTo('.prem-img',
   { clipPath:'inset(0 100% 0 0)', opacity:1 },
   { clipPath:'inset(0 0% 0 0)', scrollTrigger:{ trigger:'.prem-img', start:'top 78%' }, duration:1.3, ease:'power4.inOut' }
 );
-gsap.utils.toArray('.prem-item').forEach((el,i) => {
-  gsap.to(el, {
-    scrollTrigger:{ trigger:el, start:'top 88%' },
-    opacity:1, x:0, duration:.7, delay:i*.1, ease:'power2.out'
+gsap.utils.toArray('.prem-col').forEach((el,i)=>{
+  gsap.to(el,{
+    scrollTrigger:{ trigger:'.prem-grid', start:'top 85%' },
+    opacity:1, y:0, duration:.7, delay:i*.12, ease:'power2.out'
   });
 });
+gsap.to('.prem-features-head',{
+  scrollTrigger:{ trigger:'.prem-features-head', start:'top 88%' },
+  opacity:1, y:0, duration:.8, ease:'power3.out'
+});
 
-/* ══ GLOBAL REVEALS ══════════════════════ */
-gsap.utils.toArray('.reveal').forEach(el => {
-  gsap.to(el, {
+/* ══ FAQ CTA ════════════════════════════════ */
+gsap.to('.faq-cta h2',{
+  scrollTrigger:{ trigger:'.faq-cta', start:'top 82%' },
+  opacity:1, y:0, duration:1, ease:'power3.out'
+});
+gsap.to('.faq-cta-btns',{
+  scrollTrigger:{ trigger:'.faq-cta', start:'top 75%' },
+  opacity:1, y:0, duration:.9, delay:.15, ease:'power3.out'
+});
+
+/* ══ GLOBAL REVEALS ═════════════════════════ */
+gsap.utils.toArray('.reveal').forEach(el=>{
+  gsap.to(el,{
     scrollTrigger:{ trigger:el, start:'top 88%' },
     opacity:1, y:0, duration:.9, ease:'power3.out'
   });
 });
 
-/* ══ FAQ ACCORDION ═══════════════════════ */
-document.querySelectorAll('.faq-q').forEach(q => {
-  q.addEventListener('click', () => {
-    const item = q.parentElement;
-    const open = item.classList.contains('open');
+/* ══ FAQ ACCORDION ══════════════════════════ */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    const open=item.classList.contains('open');
     document.querySelectorAll('.faq-item.open').forEach(f=>f.classList.remove('open'));
-    if (!open) item.classList.add('open');
+    if(!open) item.classList.add('open');
   });
 });
 
-/* ══ PARALLAX ════════════════════════════ */
-gsap.to('#heroMap', {
+/* ══ HERO PARALLAX ══════════════════════════ */
+gsap.to('#heroMap',{
   scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:true },
   y:'15%', ease:'none'
 });
 
-/* ══ STORE BTN hover ═════════════════════ */
-document.querySelectorAll('.store-btn').forEach(btn => {
-  btn.addEventListener('mouseenter', () => gsap.to(btn, { x:6, duration:.2 }));
-  btn.addEventListener('mouseleave', () => gsap.to(btn, { x:0, duration:.25 }));
-});
-
-/* ══ FAQ/CTA section reveal ══════════════ */
-gsap.to('#faq h2', {
-  scrollTrigger:{ trigger:'#faq h2', start:'top 85%' },
-  opacity:1, y:0, duration:1, ease:'power3.out'
-});
-
-/* ══ Stagger map panel on section enter ═ */
+/* ══ MAP SECTION ENTRY ══════════════════════ */
 ScrollTrigger.create({
-  trigger: '.map-wrap',
-  start: 'top 85%',
-  once: true,
-  onEnter() {
-    gsap.fromTo('#mapSticky',
-      { opacity:0, y:24 },
-      { opacity:1, y:0, duration:.8, ease:'power3.out' }
-    );
-  }
+  trigger:'.map-wrap', start:'top 85%', once:true,
+  onEnter(){ gsap.fromTo('#mapSticky',{opacity:0,y:24},{opacity:1,y:0,duration:.8,ease:'power3.out'}); }
+});
+
+/* ══ PREMIUM sub reveals ════════════════════ */
+gsap.utils.toArray('.prem-tag-wrap,.prem-heading,.prem-sub').forEach(el=>{
+  gsap.to(el,{
+    scrollTrigger:{ trigger:el, start:'top 88%' },
+    opacity:1, y:0, duration:.9, ease:'power3.out'
+  });
 });
 </script>
 </body>
